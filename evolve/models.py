@@ -7,7 +7,7 @@ from tagging.fields import TagField
 class Idea(models.Model):
     user = models.ForeignKey(User, verbose_name=_("Author"))
     pub_date = models.DateTimeField(auto_now_add = True, verbose_name=_("Date Published"))
-    parent_idea = models.ForeignKey("self", verbose_name="Parent Idea")
+    parent_idea = models.ForeignKey("self", verbose_name="Parent Idea", blank=True, null=True)
     state = models.CharField(maxlength=1, choices=settings.STATE_CHOICES, default=settings.STATE_DEFAULT, verbose_name=_("State of object"))
     content = models.TextField(_("Content"))
     ip_address = models.IPAddressField(verbose_name=_("Author's IP Address"))
@@ -15,17 +15,18 @@ class Idea(models.Model):
     objects = models.Manager()
     published_objects = PublishedManager()
     tags = TagField(help_text=_("Enter key terms seperated with a space that you want to associate with this Idea"), verbose_name=_("Tags"))
+        
+    def get_absolute_url(self):
+        return "/ideas/%s/%s/" % (self.pub_date.strftime("%Y/%b/%d").lower(), self.slug)
 
     def __str__(self):
         return "%s" % (self.content)
 
-#    class Meta:
-#        ordering = ['content']
-#        verbose_name = "Idea"
-#        verbose_name_plural = "Ideas"
-#        unique_together = (("parent_idea", "content"),)
+    class Meta:
+        ordering = ['content']
+        verbose_name = "Idea"
+        verbose_name_plural = "Ideas"
 
     class Admin:
-        pass
-#        ordering = ['content']
-#        search_fields = ['content']
+        ordering = ['content']
+        search_fields = ['content']
