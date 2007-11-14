@@ -14,13 +14,14 @@
 <input type="hidden" id="id_state" name="state" value="{{ STATE_DEFAULT }}" />
 <input type="hidden" id="id_slug" name="slug" value="" maxlength="50" />
 <input type="hidden" id="id_ip_address" class="vIPAddressField required" name="ip_address" size="15" value="{{ request.META.REMOTE_ADDR }}" maxlength="15" />
+<input type="hidden" id="id_parent_idea" name="parent_idea" value="" />
 {% if form.content.errors %}*** {% blocktrans %}{{ form.content.errors|join:", " }}{% endblocktrans %}{% endif %}
 <label for"id_content">{% trans "Content" %}:</label> {{ form.content }}
 {% if form.tags.errors %}*** {% blocktrans %}{{ form.tags.errors|join:", " }}{% endblocktrans %}{% endif %}
 <label for"id_tags">{% trans "Tags" %}:</label> {{ form.tags }}
 <input type="submit" value="{% blocktrans %}Create{% endblocktrans %}" />
-</form>
 <script type="text/javascript">
         document.getElementById("id_slug").onchange = function() { this._changed = true; };document.getElementById("id_content").onkeyup = function() { var e = document.getElementById("id_slug"); if(!e._changed) { e.value = URLify(document.getElementById("id_content").value, 50);} }; 
 </script>
+</form>
 {% endblock %}

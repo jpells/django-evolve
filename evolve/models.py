@@ -7,7 +7,7 @@ from tagging.fields import TagField
 class Idea(models.Model):
     user = models.ForeignKey(User, verbose_name=_("Author"))
     pub_date = models.DateTimeField(auto_now_add = True, verbose_name=_("Date Published"))
-    parent_idea = models.ForeignKey("self", verbose_name="Parent Idea", blank=True, null=True)
+    parent_idea = models.ForeignKey("self", verbose_name="Parent Idea", blank=True, null=True, unique=False)
     state = models.CharField(maxlength=1, choices=settings.STATE_CHOICES, default=settings.STATE_DEFAULT, verbose_name=_("State of object"))
     content = models.TextField(_("Content"))
     ip_address = models.IPAddressField(verbose_name=_("Author's IP Address"))

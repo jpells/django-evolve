@@ -35,6 +35,9 @@ urlpatterns += patterns('sorted_paginated_authored_archived_list_view.views',
 )
 
 urlpatterns += patterns('django.views.generic.date_based',
-    (r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/(?P<slug>[0-9A-Za-z-]+)/$', 'object_detail', dict(idea_dict_detail, slug_field='slug')),
+    (r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/(?P<slug>[0-9A-Za-z-]+)/$', 'object_detail', dict(idea_dict_detail, slug_field='slug', extra_context={'STATE_DEFAULT': settings.STATE_DEFAULT})),
 )
 
+urlpatterns += patterns('voting.views',
+    (r'^(?P<object_id>\d+)/(?P<direction>up|down|clear)vote/?$', 'vote_on_object', dict(model=Idea, template_object_name='idea', template_name='evolve/_idea.html', allow_xmlhttprequest=True)),
+)
